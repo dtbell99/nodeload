@@ -12,13 +12,38 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/test', (request, response) => {
+  process(() => {
+    //console.log('returning');
+    response.status(200);
+    response.send('success');
+  });
+});
+
+const process = async (cb) => {
+  // setTimeout(() => {
+  //   cb();
+  // }, getRandom());
+  cb();
+}
+
+const getRandom = () => {
+  var min = 1;
+  var max = 20;
+  var random = Math.floor(Math.random() * (+max - +min)) + +min;
+  var randomNumber = random * 1000;
+  //console.log("Random: " + randomNumber);
+  return 1000;
+  //return randomNumber;
+}
+
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
